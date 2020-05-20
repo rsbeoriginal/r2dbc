@@ -42,15 +42,10 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  public Mono<Employee> deleteEmployee(@PathVariable("id") Long id){
-    return employeeRepository.findById(id)
-        .doOnSuccess(employee -> employeeRepository.deleteById(id).subscribe())
-        .map(employee -> {
-          if (Objects.isNull(employee)){
-            throw new RuntimeException("Employee doesn't exist");
-          }
-          return null;
-        });
+  public Mono<Boolean> deleteEmployee(@PathVariable("id") Long id){
+    return employeeRepository.deleteById(id)
+        .map(voidMono -> true)
+        .onErrorReturn(false);
   }
 
   @GetMapping
