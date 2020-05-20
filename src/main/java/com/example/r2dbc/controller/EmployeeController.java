@@ -42,10 +42,8 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  public Mono<Boolean> deleteEmployee(@PathVariable("id") Long id){
-    return employeeRepository.deleteById(id)
-        .map(voidMono -> true)
-        .onErrorReturn(false);
+  public Mono<Void> deleteEmployee(@PathVariable("id") Long id){
+    return employeeRepository.deleteById(id);
   }
 
   @GetMapping
