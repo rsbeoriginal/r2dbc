@@ -42,8 +42,9 @@ public class EmployeeController {
   }
 
   @DeleteMapping("/{id}")
-  public Mono<Void> deleteEmployee(@PathVariable("id") Long id){
-    return employeeRepository.deleteById(id);
+  public Mono<Employee> deleteEmployee(@PathVariable("id") Long id){
+    return employeeRepository.findById(id)
+        .doOnSuccess(employee -> employeeRepository.delete(employee).subscribe());
   }
 
   @GetMapping
